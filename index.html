@@ -40,6 +40,7 @@
               $scope.alunos.push(angular.copy(aluno));
               delete $scope.aluno;
               $scope.alunoForm.$setPristine();
+              $scope.alunoForm.$setDirty();
           };
           $scope.apagarAlunos = function (alunos) {
               $scope.alunos = alunos.filter(function (aluno) {
@@ -83,8 +84,15 @@
     Por favor, preencha o campo nome!
   </div>
 
+    <div ng-show="alunoForm.nome.$error.minlength" class="alert alert-danger">
+        O nome do novo aluno está muito pequeno!
+    </div>
+
   <div ng-show="alunoForm.matricula.$error.required" class="alert alert-danger">
     Por favor, preencha o campo matrícula!
+  </div>
+    <div ng-show="alunoForm.matricula.$error.minlength || alunoForm.matricula.$error.maxlength" class="alert alert-danger">
+        A matrícula do novo aluno está inválida!
   </div>
 
   <div ng-show="alunoForm.email.$error.required" class="alert alert-danger">
