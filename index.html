@@ -27,6 +27,11 @@
     .negrito {
       font-weight: bold;
     }
+    .error{
+      margin-left: 85px;
+      margin-top: 10px;
+      color: red;
+  }
   </style>
   <script src="angular.js"></script>
   <script>
@@ -56,6 +61,7 @@
   </script>
 </head>
 <body ng-controller="atividadeFormularioCtrl">
+<div id="content">
 <div class="jumbotron">
   <h3>{{app}}</h3>
   <table ng-show="alunos.length > 0" class="table">
@@ -73,12 +79,26 @@
   <hr/>
   <form name="alunoForm" method="post">
     <input class="form-control" type="text" ng-model="aluno.nome" name="nome" placeholder="Nome" ng-required="true" ng-minlength="15"/><br>
+    <div class="error">
+    <span ng-show="alunoForm.nome.$error.required"> O nome é obrigatório </span>
+   <span ng-show="alunoForm.nome.$error.minlength"> O tamanho mínimo é de 15 caracteres.</span>
+    </div>
     <input class="form-control" type="text" ng-model="aluno.matricula" name="matricula" placeholder="Matrícula" ng-required="true" ng-minlength="10" ng-maxlength="11"/><br>
+     <div class="error">
+    <span ng-show="alunoForm.matricula.$error.required"> A matrícula é  obrigatória </span>
+    <span ng-show="alunoForm.matricula.$error.minlength"> O tamanho mínimo é de 10 caracteres.</span>
+    <span ng-show="alunoForm.matricula.$error.minlength"> O tamanho máximo é de 11 caraacteres </span>
+  </div>
     <select title="Sexo" class="form-control" ng-model="aluno.sexo" ng-init="aluno.sexo = sexo[0]" ng-options="sexo.nome for sexo in sexos">
     </select><br>
     <input class="form-control" type="email" ng-model="aluno.email" name="email" placeholder="Email" ng-required="true" ng-pattern="/^\w+@ifpb.mail/" /><br>
+   <div class="error">
+    <span ng-show="alunoForm.email.$error.required"> O email é  obrigatório </span>
+    </div>    
     <input type="submit" name="Enviar" ng-click="adicionarAluno(aluno)" ng-disabled="alunoForm.$invalid">
   </form>
+  
+  </div>
 
   <div ng-show="alunoForm.nome.$error.required" class="alert alert-danger">
     Por favor, preencha o campo nome!
